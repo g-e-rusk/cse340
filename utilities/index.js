@@ -37,9 +37,9 @@ Util.buildClassificationGrid = async function(data) {
             + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model
             + ' details"><img src="' + vehicle.inv_thumbnail
             +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model
-            +' on CSE Motors" /></a>'
+            +' on CSE Motors"></a>'
             grid += '<div class="namePrice">'
-            grid += '<hr />'
+            grid += '<hr>'
             grid += '<h2 class="vehicleTitle">'
             grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View'
             + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
@@ -67,18 +67,17 @@ Util.buildVehicleInfo = async function(data) {
         data.forEach(vehicle => {
             grid += '<img src="' + vehicle.inv_image
             +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model
-            +' on CSE Motors" /></a>'
+            +' on CSE Motors">'
             grid += '<div class="vehicle-display">'
-            grid += '<h2 class="vehicle-header">'
             grid += '</h2>'
             grid += '<span class="price"><strong>Price:</strong> $ '
             + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
-            grid += '<hr class="vehicleInfo" />'
+            grid += '<hr class="vehicleInfo">'
             grid += '<p class="description"><strong>Description:</strong> ' + vehicle.inv_description
             grid += '</p>'
             grid += '<span class="vehicleColor"><strong>Color:</strong> ' + vehicle.inv_color 
             grid += '</span>'
-            grid += '<br></br>'
+            grid += '<br>'
             grid += '<span class="vehicleMiles"><strong>Mileage:</strong> '
             + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</span>'
             grid += '</div>'
