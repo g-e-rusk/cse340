@@ -69,7 +69,6 @@ Util.buildVehicleInfo = async function(data) {
             +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model
             +' on CSE Motors">'
             grid += '<div class="vehicle-display">'
-            grid += '</h2>'
             grid += '<span class="price"><strong>Price:</strong> $ '
             + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
             grid += '<hr class="vehicleInfo">'
