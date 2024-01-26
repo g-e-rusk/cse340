@@ -13,6 +13,7 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/")
+const errorController = require("./controllers/errorController")
 
 /* ***********************
  * View Engine and Templates
@@ -25,12 +26,14 @@ app.set("layout", "./layouts/layout")
 /* ***********************
  * Routes
  *************************/
-app.use(static)
+app.use(utilities.handleErrors(static))
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
-app.use("/inv", inventoryRoute)
-// File Not Found Routh - must be last route in list
+app.use("/inv", utilities.handleErrors(inventoryRoute))
+// Error route
+app.use("/error", utilities.handleErrors(errorController.generateError))
+// File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'We are unable to locate what you are looking for.'})
 })
