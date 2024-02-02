@@ -1,0 +1,22 @@
+<!-- Content Heading -->
+<% if (title) { %>
+    <h1 id="add-classification"><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<!-- Message -->
+<%- messages() %>
+
+<!-- Form -->
+<div class="add-classification">
+    <form class="newClass" action="./add-classification" method="post">
+        <legend>Add New Vehicle Classification</legend>
+        <label for="classification_name">Vehicle Classification:</label><br>
+        <input type="text" id="classification_name" name="classification_name" required>
+        <p class="classDirections"><i>Note: New classifications cannot contain a space or any special characters</i></p>
+        <div class="button">
+            <input type="submit" class="newClassButton" value="Create Classification"> 
+        </div>
+    </form>
+</div>

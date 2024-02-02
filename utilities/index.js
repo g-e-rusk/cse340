@@ -89,6 +89,35 @@ Util.buildVehicleInfo = async function(data) {
     return grid
 }
 
+/* **************************************************
+ * Constructs the management view add inventory drop-down menu
+ * ************************************************** */
+Util.getFormSelections = async function (req, res, next) {
+    let data = await invModel.getClassifications()
+    let list = '<label for="carClass" class="newInvClass">Choose the vehicle classification: </label>'
+    list += '<select id="classification_name" name="classification_name" class="newInvClass">'
+    data.rows.forEach((row) => {
+        list +=
+            `<option class="newInvClass" value="${row.classification_id}">${row.classification_name}</option>`})
+    return list
+}
+
+/* **********************************************
+ * Constructs the links for the new classification page
+ * **********************************************/
+Util.buildNewClassView = async function (req, res, next) {
+    let newCarClass = '<a href="/inv/add-classification">Add New Classification</a>'
+    return newCarClass
+}
+
+/* **********************************************
+ * Constructs the links for the new inventory page
+ * **********************************************/
+Util.buildNewCarView = async function (req, res, next) {
+    let newCar = '<a href="/inv/add-inventory">Add New Inventory</a>'
+    return newCar
+}
+
 /* **********************************
  * Middleware for Handling Errors
  * Wrap another function in this for
