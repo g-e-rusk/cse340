@@ -57,7 +57,7 @@ invCont.buildManagementView = async function (req, res, next) {
  * **************************/
 invCont.buildClassManageView = async function (req, res, next) {
     let nav = await utilities.getNav()
-    req.flash("notice", "")
+    req.flash()
     res.render("./inventory/add-classification", {
         title: "New Classification",
         nav,
@@ -71,7 +71,7 @@ invCont.buildClassManageView = async function (req, res, next) {
 invCont.buildInvManageView = async function (req, res, next) {
     let nav = await utilities.getNav()
     let carClass = await utilities.getFormSelections()
-    req.flash("notice", "")
+    req.flash()
     res.render("./inventory/add-inventory", {
         title: "New Inventory",
         nav,
@@ -85,25 +85,67 @@ invCont.buildInvManageView = async function (req, res, next) {
  * ****************************/
 invCont.createNewClassification = async function (req, res, next) {
     let nav = await utilities.getNav()
-    const classification_name = req.body
+    let newClass = await utilities.buildNewClassView()
+    let addCar = await utilities.buildNewCarView()
+    
+    const {classification_name} = req.body
 
-    const regResult = await inventory-model.createNewClassification(
+    const regResult = await invModel.createNewClassification(
         classification_name
     )
 
     if (regResult) {
+        let nav = await utilities.getNav()
         req.flash(
             "notice",
-            `${name} has been added.`
+            `${classification_name} has been added.`
         )
-        res.status(201).render("/", {
+        res.status(201).render("./inventory/", {
             title: "Management - New Inventory",
             nav,
+            newClass,
+            addCar,     
         })
     } else {
         req.flash("notice", "Sorry, classifiction not added. Please try again.")
-        res.status(501).render("/add-classification", {
+        res.status(501).render("./inventory/add-classification", {
             title: "Add New Classification",
+            nav,
+            errors: null,
+        })
+    }
+}
+
+/* ****************************
+ * Create new vehicle inventory 
+ * ****************************/
+invCont.createNewInventory = async function (req, res, next) {
+    let nav = await utilities.getNav()
+
+    const {inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, classification_id} = req.body
+
+    const regResult = await invModel.createNewInventory(
+        inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, classification_id
+    )
+
+    if (regResult) {
+        let nav = await utilities.getNav()
+        let newClass = await utilities.buildNewClassView()
+        let addCar = await utilities.buildNewCarView()
+        req.flash(
+            "notice",
+            `${inv_year} ${inv_make} ${inv_model} has been added.`
+        )
+        res.status(201).render("./inventory/", {
+            title: "Management - New Inventory",
+            nav,
+            newClass,
+            addCar,
+        })
+    } else  {
+        req.flash("notice", "Sorry, inventory not added. Please try again.")
+        res.status(501).render("./inventory/add-inventory", {
+            title: "Add New Inventory",
             nav,
             errors: null,
         })

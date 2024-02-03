@@ -4,7 +4,7 @@ const valid = {}
 const inventoryModel = require("../models/inventory-model")
 
 /* ********************************************
- * Registration Data Validation Rules
+ * Classification Validation Rules
  * ********************************************/
 valid.newClassRules = () => {
     return [
@@ -23,7 +23,7 @@ valid.newClassRules = () => {
 }
 
 /* ******************************
- * Check data and return errors or continue to registration
+ * Check data and return errors 
  * ******************************/
 valid.checkClassData = async (req, res, next) => {
     const { classification_name } = req.body
@@ -31,7 +31,7 @@ valid.checkClassData = async (req, res, next) => {
     errors = validationResult(req)
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()
-        res.render("./add-classification", {
+        res.render("./inventory/add-classification", {
             errors,
             title: "New Classification",
             nav,

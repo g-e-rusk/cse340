@@ -354,6 +354,7 @@ figcaption {
 .button {
   text-align: center;
   border-radius: 5px;
+  cursor: pointer;
   
 }
 
@@ -412,6 +413,7 @@ figcaption {
   font-size: 1.5rem;
   width: 50%;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .newInvClass {
@@ -434,6 +436,7 @@ figcaption {
   width: 75%;
   margin: 15px auto;
   border-radius: 10px;
+  cursor: pointer;
   
 }
 
