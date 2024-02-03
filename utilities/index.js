@@ -95,7 +95,7 @@ Util.buildVehicleInfo = async function(data) {
 Util.getFormSelections = async function (req, res, next) {
     let data = await invModel.getClassifications()
     let list = '<label for="carClass" class="newInvClass">Choose the vehicle classification: </label>'
-    list += '<select id="classification_name" name="classification_name" class="newInvClass">'
+    list += '<select id="classification_id" name="classification_id" class="newInvClass">'
     data.rows.forEach((row) => {
         list +=
             `<option class="newInvClass" value="${row.classification_id}">${row.classification_name}</option>`})

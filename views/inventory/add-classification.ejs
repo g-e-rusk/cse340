@@ -13,7 +13,7 @@
     <form class="newClass" action="./add-classification" method="post">
         <legend>Add New Vehicle Classification</legend>
         <label for="classification_name">Vehicle Classification:</label><br>
-        <input type="text" id="classification_name" name="classification_name" required>
+        <input type="text" id="classification_name" name="classification_name" required pattern="/^[A-Za-z]+$/">
         <p class="classDirections"><i>Note: New classifications cannot contain a space or any special characters</i></p>
         <div class="button">
             <input type="submit" class="newClassButton" value="Create Classification"> 
