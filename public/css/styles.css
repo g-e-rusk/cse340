@@ -15,6 +15,7 @@
 
 #wrapper {
   max-width: 90%;
+  max-height: 100vw;
   background-color: #FFFFFF;
   color: #000000;
   margin: 0 auto;
@@ -418,7 +419,9 @@ figcaption {
 
 .newInvClass {
   font-family: 'Quattrocento', serif;
-  font-size: 1.25rem;;
+  font-size: 1.25rem;
+  height: 25px;
+  overflow-y: scroll;
 }
 
 #newClass a, #addCar a {

@@ -1,4 +1,6 @@
 const invModel = require("../models/inventory-model")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const Util = {}
 
 /* **************************************************
@@ -29,7 +31,7 @@ Util.getNav = async function (req, res, next) {
  * ********************************** */
 Util.buildClassificationGrid = async function(data) {
     let grid
-    if(data.length > 0) {
+    if(data && data.length > 0) {
         grid = '<ul id="inv-display">'
         data.forEach(vehicle => {
             grid += '<li class="grid-display">'
@@ -96,6 +98,7 @@ Util.getFormSelections = async function (req, res, next) {
     let data = await invModel.getClassifications()
     let list = '<label for="carClass" class="newInvClass">Choose the vehicle classification: </label>'
     list += '<select id="classification_id" name="classification_id" class="newInvClass">'
+    list+= '<option class="newInvClass" value="Select one"></option>'
     data.rows.forEach((row) => {
         list +=
             `<option class="newInvClass" value="${row.classification_id}">${row.classification_name}</option>`})
@@ -118,11 +121,47 @@ Util.buildNewCarView = async function (req, res, next) {
     return newCar
 }
 
+
 /* **********************************
  * Middleware for Handling Errors
  * Wrap another function in this for
  * General Error Handling
  * ********************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+/* **************************************
+ * Middleware for Checking for existence of cookie for JWT
+ * **************************************/
+Util.checkJWTToken = (req, res, next) => {
+    if(req.cookies.jwt) {
+        jwt.verify(
+            req.cookies.jwt,
+            process.env.ACCESS_TOKEN_SECRET,
+            function (err, accountData) {
+                if (err) {
+                    req.flash("notice", "Please log in")
+                    res.clearCookie("jwt")
+                    return res.redirect("/account/login")
+                }
+            res.locals.accountData = accountData
+            res.locals.loggedin = 1
+            next()
+            })
+    } else {
+        next()
+    }
+}
+
+/* ****************************
+ * Check Login
+ * ****************************/
+Util.checkLogin = (req, res, next) => {
+    if (res.locals.loggedin) {
+        next()
+    } else {
+        req.flash("notice", "Please log in.")
+        return res.redirect("/account/login")
+    }
+}
 
 module.exports = Util

@@ -12,8 +12,14 @@ valid.newClassRules = () => {
         body("classification_name")
         .trim()
         .isLength({ min: 1 })
-        .matches(/^[A-Za-z]+$/)
+        .matches("^[A-Za-z]+$")
         .withMessage("Please provide a valid classification.") // on error this message is sent
+        .custom(async (classification_name) => {
+            const classExists = await inventoryModel.checkClassification(classification_name)
+            if(classExists) {
+                throw new Error ("Classification with that name already exists.  Please try a different name.")
+            }
+        }),
     ]
 }
 
